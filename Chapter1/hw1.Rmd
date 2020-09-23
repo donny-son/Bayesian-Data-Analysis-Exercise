@@ -250,7 +250,7 @@ bda_example_1_9_simulation <- function(samples=100){
 
 
 # Cut off simulation results that exceeds 480 minutes
-  res <- df[df$arrived_time <= 480,]
+  res <- df[df$arrived_time <= 420,]
   return(res)
 }
 ```
@@ -262,22 +262,22 @@ set.seed(1111)
 result <- bda_example_1_9_simulation()
 nrow(result)
 ```
-54 patients came to the office.
+47 patients came to the office.
 
 ```{r}
 (waited_patients = sum(result$wait_time > 0))
 ```
-16 patients had to wait for a doctor.
+15 patients had to wait for a doctor.
 
 ```{r}
 sum(result$wait_time[result$wait_time > 0]) / waited_patients
 ```
-Their average wait was 2.64 minutes.
+Their average wait was 2.61 minutes.
 
 ```{r}
 result$out_time[nrow(result)]
 ```
-Officed closed after 475.80 minutes since opening. Approximately 3:54pm. 
+Officed closed after 437.87 minutes since opening. Approximately 4:18pm. 
 
 ### (b)
 >  Simulate the process 100 times and estimate the median and 50% interval for each of the summaries in (a).
