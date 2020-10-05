@@ -1,7 +1,9 @@
 ---
 title: "Bayes Homework1"
 author: "2020311198 Dongook Son"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 # Chapter 1
 

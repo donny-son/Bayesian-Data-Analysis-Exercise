@@ -1,0 +1,62 @@
+---
+title: "BDA hw2"
+author: "2020311198 Dongook Son"
+output: pdf_document
+---
+```{r, include=FALSE}
+library(ggplot2)
+```
+
+## (2) Probability of a girl birth given placenta previa
+
+We can set up the variable in the following way.  
+$$
+\begin{split}
+y : \text{event of female birth; 437}  \\ 
+n : \text{total number of births; 980} \\ 
+\theta : \text{probability of placenta previa} 
+\end{split}
+$$
+Then we can construct a Binomial model to see whether the claim that the proportion of female births in the population of placenta previa is less than 0.485.  
+
+### Prior : Uniform(0,1)
+
+First, we can use a Uniform(0,1) non-informative prior for $\theta$. Since, Uniform(0,1) distribution is a special case of the Beta distribution($Beta(\alpha,\beta)$), we can directly derive the posterior distribution by conjugacy.  
+
+$$
+\begin{aligned}
+\theta | y &\sim Beta(437+1, 980-437+1) \\ 
+&\sim Beta(438, 544)
+\end{aligned}
+$$
+
+The mean and variance of the posterior distribution can be derived mathematically.
+
+$$
+E[\theta | y] = \frac{438}{438 + 544} \approx 0.4460
+$$
+
+$$
+Var(\theta | y) = \frac{438 * 544}{(438+544)^2(438+544+1)} \approx 0.0002513602 \approx 0.0159^2 
+$$
+
+The 95% credible interval can be computed in the following way.
+```{r}
+(lower_bound <- qbeta(0.025, 438, 544))
+(upper_bound <- qbeta(1-0.025, 438, 544))
+```
+
+
+```{r, fig.width=5, fig.align='center'}
+domain <- seq(0,1,0.001)
+image <- dbeta(domain, 438, 544)
+plot(domain, image, 
+     main='Posterior distribution\nBeta(438,544)', 
+     frame.plot = FALSE,
+     type = 'l',
+     )
+polygon(c(domain[domain > lower_bound & domain < upper_bound], upper_bound, lower_bound), 
+        c(image[domain > lower_bound & domain < upper_bound], 0, 0), 
+        col = 'grey')
+```
+
